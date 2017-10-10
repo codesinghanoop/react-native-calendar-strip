@@ -7,23 +7,25 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   //CALENDAR STYLES
   calendarContainer: {
-    overflow: "hidden"
+    height: 400,
+    backgroundColor: 'red'
   },
   datesStrip: {
-    flexDirection: "row",
-    flex: 1,
-    justifyContent: "space-between"
+    flexDirection: "column",
+    height: 330,
+    width: 50, 
+    justifyContent: "space-between",
+    marginTop: 5
   },
   calendarDates: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: 10
   },
   calendarHeader: {
-    textAlign: "center",
-    fontWeight: "bold",
-    alignSelf: "center"
+
   },
   iconContainer: {
     justifyContent: "center",
@@ -44,7 +46,7 @@ export default StyleSheet.create({
     textAlign: "center"
   },
   weekendDateName: {
-    color: "#A7A7A7",
+    color: "black",
     textAlign: "center"
   },
   dateNumber: {
@@ -52,7 +54,7 @@ export default StyleSheet.create({
     textAlign: "center"
   },
   weekendDateNumber: {
-    color: "#A7A7A7",
+    color: "black",
     fontWeight: "bold",
     textAlign: "center"
   }

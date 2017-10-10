@@ -58,14 +58,16 @@ export default class CalendarDay extends Component {
 
     this.state = {
       selected: props.selected,
-      ...this.calcSizes(props)
+      containerSize: Math.round(props.size),
+      containerPadding: Math.round(props.size / 5),
+      containerBorderRadius: Math.round(props.size / 2),
+      dateNameFontSize: Math.round(props.size / 2.8),
+      dateNumberFontSize: Math.round(props.size / 5)
     };
   }
 
   componentWillReceiveProps(nextProps) {
     newState = {};
-    let doStateUpdate = false;
-
     if (this.state.selected !== nextProps.selected) {
       if (this.props.daySelectionAnimation.type !== "") {
         let configurableAnimation = {
@@ -101,31 +103,22 @@ export default class CalendarDay extends Component {
         LayoutAnimation.configureNext(configurableAnimation);
       }
       newState.selected = nextProps.selected;
-      doStateUpdate = true;
     }
 
     if (nextProps.size !== this.props.size) {
-      newState = {...newState, ...this.calcSizes(nextProps)};
-      doStateUpdate = true;
+      newState.containerSize = Math.round(nextProps.size);
+      newState.containerPadding = Math.round(nextProps.size / 5);
+      newState.containerBorderRadius = Math.round(nextProps.size / 2);
+      newState.dateNameFontSize = Math.round(nextProps.size / 5);
+      newState.dateNumberFontSize = Math.round(nextProps.size / 2.9);
     }
 
-    if (doStateUpdate) {
-      this.setState(newState);
-    }
-  }
-
-  calcSizes(props) {
-    return {
-      containerSize: Math.round(props.size),
-      containerPadding: Math.round(props.size / 5),
-      containerBorderRadius: Math.round(props.size / 2),
-      dateNameFontSize: Math.round(props.size / 5),
-      dateNumberFontSize: Math.round(props.size / 2.9)
-    }
+    this.setState(newState);
   }
 
   render() {
     // Defaults for disabled state
+    let textColor= this.state.selected? 'red' : 'black';
     let dateNameStyle = [styles.dateName, this.props.disabledDateNameStyle];
     let dateNumberStyle = [
       styles.dateNumber,
@@ -192,8 +185,8 @@ export default class CalendarDay extends Component {
     }
 
     let responsiveDateContainerStyle = {
-      width: this.state.containerSize,
-      height: this.state.containerSize,
+      width: 50,
+      height: 20,
       borderRadius: this.state.containerBorderRadius,
       padding: this.state.containerPadding
     };
@@ -212,7 +205,7 @@ export default class CalendarDay extends Component {
         >
           {this.props.showDayName &&
             <Text
-              style={[dateNameStyle, { fontSize: this.state.dateNameFontSize }]}
+              style={[dateNameStyle, { fontSize: 9, color: textColor }]}
             >
               {this.props.date.format("ddd").toUpperCase()}
             </Text>}
@@ -220,7 +213,7 @@ export default class CalendarDay extends Component {
             <Text
               style={[
                 dateNumberStyle,
-                { fontSize: this.state.dateNumberFontSize }
+                { fontSize: 9, color: textColor }
               ]}
             >
               {this.props.date.date()}

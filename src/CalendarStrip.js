@@ -207,22 +207,6 @@ export default class CalendarStrip extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    // Extract selector icons since JSON.stringify fails on React component circular refs
-    let _nextProps = Object.assign({}, nextProps);
-    let _props = Object.assign({}, this.props);
-
-    delete _nextProps.leftSelector;
-    delete _nextProps.rightSelector;
-    delete _props.leftSelector;
-    delete _props.rightSelector;
-
-    return JSON.stringify(this.state) !== JSON.stringify(nextState) ||
-          JSON.stringify(_props) !== JSON.stringify(_nextProps) ||
-          this.props.leftSelector !== nextProps.leftSelector ||
-          this.props.rightSelector !== nextProps.rightSelector;
-  }
-
   // Check whether two datetimes are of the same value.  Supports Moment date,
   // JS date, or ISO 8601 strings.
   // Returns true if the datetimes values are the same; false otherwise.
@@ -539,7 +523,7 @@ export default class CalendarStrip extends Component {
           styleWeekend={this.props.styleWeekend}
           daySelectionAnimation={this.props.daySelectionAnimation}
           customStyle={this.state.datesCustomStylesForWeek[i]}
-          size={this.state.dayComponentWidth}
+          size={14}
         />
       );
       datesRender.push(
@@ -561,7 +545,7 @@ export default class CalendarStrip extends Component {
         calendarHeaderFormat={this.props.calendarHeaderFormat}
         calendarHeaderStyle={this.props.calendarHeaderStyle}
         datesForWeek={this.state.datesForWeek}
-        fontSize={this.state.monthFontSize}
+        fontSize={14}
       />;
 
     // calendarHeader renders above the dates & left/right selectors if dates are shown.
@@ -575,7 +559,13 @@ export default class CalendarStrip extends Component {
         ]}
       >
         <View
-          style={[this.props.innerStyle, { height: this.state.height }]}
+          style={[this.props.innerStyle, { height: this.state.height, backgroundColor: '#d3d3d3', width: 90, alignItems: 'center', elevation: 5, shadowColor: 'grey',
+                                        shadowOffset: {
+                                            height: 0,
+                                            width: 0
+                                        },
+                                        shadowRadius: 5,
+                                        shadowOpacity: 1 }]}
           onLayout={this.onLayout.bind(this)}
         >
           {this.props.showDate && calendarHeader}
@@ -592,7 +582,7 @@ export default class CalendarStrip extends Component {
                 this.state.datesForWeek[this.state.datesForWeek.length - 1]
               }
               weekStartDate={this.state.datesForWeek[0]}
-              size={this.state.selectorSize}
+              size={15}
             />
 
             {this.props.showDate
@@ -613,7 +603,7 @@ export default class CalendarStrip extends Component {
                 this.state.datesForWeek[this.state.datesForWeek.length - 1]
               }
               weekStartDate={this.state.datesForWeek[0]}
-              size={this.state.selectorSize}
+              size={15}
             />
           </View>
         </View>
